@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Covid-19-Awareness/Covid-19-Awareness-NYTimes-Server/issues"
   },
-  "homepage": "https://github.com/Covid-19-Awareness/Covid-19-Awareness-NYTimes-Server#readme"
+  "homepage": "https://github.com/Covid-19-Awareness/Covid-19-Awareness-NYTimes-Server#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
