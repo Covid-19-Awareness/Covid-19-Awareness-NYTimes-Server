@@ -1,0 +1,19 @@
+{
+  "name": "covid-19-awareness-nytimes-server",
+  "version": "1.0.0",
+  "description": "Server for covid-19 data from New York Times (https://github.com/nytimes/covid-19-data)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Covid-19-Awareness/Covid-19-Awareness-NYTimes-Server.git"
+  },
+  "author": "Wei-Tse Sun, Huan Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Covid-19-Awareness/Covid-19-Awareness-NYTimes-Server/issues"
+  },
+  "homepage": "https://github.com/Covid-19-Awareness/Covid-19-Awareness-NYTimes-Server#readme"
+}
