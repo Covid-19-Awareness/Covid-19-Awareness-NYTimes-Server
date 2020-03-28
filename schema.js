@@ -40,4 +40,4 @@ const caseSchema = new Schema({
 
 const NYTModel = mongoose.model('nytCovidCases', caseSchema);
 
-// const Cases = new NYTModel();
+module.exports = NYTModel;
