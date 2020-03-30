@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-//connect to database
+// Connect to database
 mongoose.connect('mongodb://localhost:27017/nytimesCovidData', { useNewUrlParser: true, useUnifiedTopology: true });
 
-//drop collection before seeding
+// Drop collection before seeding
 const connection = mongoose.connection;
 
 connection.once('open', () => {
@@ -39,5 +39,10 @@ const caseSchema = new Schema({
 })
 
 const NYTModel = mongoose.model('nytCovidCases', caseSchema);
+
+/**
+ * @TODO seed data from covid-19-data folder
+ */
+
 
 module.exports = NYTModel;
