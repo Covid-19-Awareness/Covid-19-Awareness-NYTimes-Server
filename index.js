@@ -1,12 +1,15 @@
 const StateCaseModel = require('./seedState');
 const CountyCaseModel = require('./seedCounty');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 mongoose.connect('mongodb://localhost:27017/nytimesCovidData', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express');
 const app = express();
+
 app.use(express.json());
+app.use(cors());
 
 app.get('/counties', (req, res) => {
   CountyCaseModel.find()
