@@ -1,3 +1,5 @@
+const NYTModel = require('./schema');
+
 const express = require('express');
 const app = express();
 

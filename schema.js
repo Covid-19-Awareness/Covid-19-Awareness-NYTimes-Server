@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
+const fastcsv = require('fast-csv');
 
 // Connect to database
 mongoose.connect('mongodb://localhost:27017/nytimesCovidData', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -13,10 +15,10 @@ connection.once('open', () => {
     if(err) {
       console.error(err);
     } else {
-      for (let name in names) {
-        if (name.name === 'nytCovidCases') {
-          console.log('Collection: nytCovidCases found');
-          connection.db.dropCollection('nytCovidCases', (err, res) => {
+      for (let name of names) {
+        if (name.name === 'nytcovidcases') {
+          console.log('Collection: nytcovidcases found');
+          connection.db.dropCollection('nytcovidcases', (err, res) => {
             console.log( `Collection: ${name.name} dropped`);
           });
         } else {
@@ -29,7 +31,7 @@ connection.once('open', () => {
 
 const Schema = mongoose.Schema;
 
-const caseSchema = new Schema({
+const SchemaForCounty = new Schema({
   date: Date,
   country: String,
   state: String,
@@ -38,11 +40,37 @@ const caseSchema = new Schema({
   deaths: Number
 })
 
-const NYTModel = mongoose.model('nytCovidCases', caseSchema);
+const CountyCaseModel = mongoose.model('nytCovidCases', SchemaForCounty);
 
-/**
- * @TODO seed data from covid-19-data folder
- */
+// seed data into MongoDB
+let stream = fs.createReadStream(__dirname + '/covid-19-data/us-counties.csv');
+let csvData = [];
+let csvStream = fastcsv
+  .parse()
+  .on('data', (data) => {
+    csvData.push({
+      date: data[0],
+      county: data[1],
+      state: data[2],
+      fips: data[3],
+      cases: data[4],
+      deaths: data[5],
+    })
+  })
+  .on('end', () => {
+    // remove the header
+    csvData.shift();
+
+    // save to database
+    CountyCaseModel.insertMany(csvData, (err, res) => {
+      if(err) throw err;
+      console.log(`Inserted: ${res.length} rows`);
+      connection.close();
+    })
+  });
+
+  stream.pipe(csvStream);
 
 
-module.exports = NYTModel;
+
+module.exports = CountyCaseModel;
