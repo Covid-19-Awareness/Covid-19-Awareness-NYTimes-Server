@@ -16,18 +16,19 @@ connection.once('open', () => {
       console.error(err);
     } else {
       for (let name of names) {
-        if (name.name === 'nytcovidcases') {
-          console.log('Collection: nytcovidcases found');
-          connection.db.dropCollection('nytcovidcases', (err, res) => {
-            console.log( `Collection: ${name.name} dropped`);
+        // Drop collection - counties if exist
+        if (name.name === 'counties') {
+          console.log('Collection - counties found');
+          connection.db.dropCollection('counties', (err, res) => {
+            console.log( `Collection - counties dropped`);
           });
-        } else {
-          console.log('Collection does not exist');
-        }
+        } 
       }
     }
   })
 })
+
+
 
 const Schema = mongoose.Schema;
 
@@ -40,7 +41,7 @@ const SchemaForCounty = new Schema({
   deaths: Number
 })
 
-const CountyCaseModel = mongoose.model('nytCovidCases', SchemaForCounty);
+const CountyCaseModel = mongoose.model('counties', SchemaForCounty);
 
 // seed data into MongoDB
 let stream = fs.createReadStream(__dirname + '/covid-19-data/us-counties.csv');
@@ -65,7 +66,7 @@ let csvStream = fastcsv
     CountyCaseModel.insertMany(csvData, (err, res) => {
       if(err) throw err;
       console.log(`Inserted: ${res.length} rows`);
-      connection.close();
+      // connection.close();
     })
   });
 
