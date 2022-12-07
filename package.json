@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Covid-19-Awareness/Covid-19-Awareness-NYTimes-Server#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.18.2"
   }
 }
